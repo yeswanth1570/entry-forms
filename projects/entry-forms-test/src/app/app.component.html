@@ -1,0 +1,16 @@
+<router-outlet></router-outlet>
+<app-entry *ngIf="!customTemplate" [dynaFields]="configJsonArr" [columns]="5"
+    [CUSTOMTEMPLATE]="custom1TempRef"></app-entry>
+
+
+<!-- for custom template -->
+<app-entry *ngIf="customTemplate && afterViewRendered" [dynaFields]="configJsonArr" [columns]="5"
+    [CUSTOMTEMPLATE]="{'custom1TempRef':custom1TempRef,'custom2TempRef':custom2TempRef}"
+    (formGroup)="formGroupCreated($event)"></app-entry>
+<ng-template let-fieldInfo let-formGroup="formGroup" #custom1TempRef>
+    <p>custom1</p>
+</ng-template>
+<ng-template let-fieldInfo let-formGroup="formGroup" #custom2TempRef>
+    <p>custom2</p>
+</ng-template>
+<button (click)="submit()">save</button>
