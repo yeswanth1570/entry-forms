@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Validators } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 type entryFields =
   {
       fieldName:string,
@@ -7,12 +7,19 @@ type entryFields =
       fieldType:string,
       options?:Array<any>,
       templateRefName?:string,
-      formControlOption?:{
-        validators?:Validators,
-        asyncValidators?:any,
-        nonNullable?:boolean,
-        updateOn?:'blur'|'change'|'submit'
-      }
+      props?:{
+        defaultvalue?:any,
+        formControlOption?:{
+          validators?:Validators,
+          asyncValidators?:any,
+          nonNullable?:boolean,
+          updateOn?:'blur'|'change'|'submit'
+        },
+        formulaconfig?:{
+          involvedFields:Array<any>;
+          formulaCallback:any;
+        }
+      };
   }
 @Component({
   selector: 'app-root',
@@ -29,21 +36,37 @@ export class AppComponent {
       fieldName: 'TEXT',
       fieldDisplayName: 'TEXT',
       fieldType: 'TEXT',
-      formControlOption:{
-        validators:[Validators.minLength(2)]
-      }
+      props:{
+        defaultvalue:'yesh',
+        formControlOption:{
+          validators:[Validators.minLength(2)]
+        }
+      },
+     
     }, {
       fieldName: 'NUMBER',
       fieldDisplayName: 'NUMBER',
-      fieldType: 'NUMBER'
+      fieldType: 'NUMBER',
+      props:{
+        defaultvalue:22415736,
+        formControlOption:{
+          validators:[Validators.required]
+        }
+      },
     }, {
       fieldName: 'DECIMAL',
       fieldDisplayName: 'DECIMAL',
-      fieldType: 'DECIMAL'
+      fieldType: 'DECIMAL',
+      props:{
+        defaultvalue:2
+      }
     }, {
       fieldName: 'DATE',
       fieldDisplayName: 'DATE',
-      fieldType: 'DATE'
+      fieldType: 'DATE',
+         props:{
+        defaultvalue:1673282199287
+      }
     }, {
       fieldName: 'DATETIME',
       fieldDisplayName: 'DATETIME',
@@ -53,6 +76,9 @@ export class AppComponent {
       fieldName: 'CHECKBOX',
       fieldDisplayName: 'CHECKBOX',
       fieldType: 'CHECKBOX',
+      props:{
+        defaultvalue:'option1'
+      },
       options:['option1','option2','option3','option4']
     }, 
     {
@@ -92,9 +118,31 @@ export class AppComponent {
       fieldName: 'FORMULA',
       fieldDisplayName: 'FORMULA',
       fieldType: 'FORMULA',
+      props:{
+        formulaconfig:{
+          involvedFields:['NUMBER','TEXT'],
+          formulaCallback:(event:any,args:any)=>{
+      this.formGroup.patchValue({'FORMULA':this.count++})
+          }
+        }
+      }
+    },
+    {
+      fieldName: 'FORMULA2',
+      fieldDisplayName: 'FORMULA2',
+      fieldType: 'FORMULA',
+      props:{
+        formulaconfig:{
+          involvedFields:['NUMBER','TEXT','DROPDOWN'],
+          formulaCallback:(event:any,args:any)=>{
+      
+          }
+        }
+      }
     }
 
   ]
+  count =0;
   submit() {
     console.log(this.formGroup.value)
     this.formGroup.submit()

@@ -34,33 +34,33 @@
         }
       }
     },
-    "entry-forms-test": {
+    "entry-forms-dev": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
         }
       },
-      "root": "projects/entry-forms-test",
-      "sourceRoot": "projects/entry-forms-test/src",
+      "root": "projects/entry-forms-dev",
+      "sourceRoot": "projects/entry-forms-dev/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/entry-forms-test",
-            "index": "projects/entry-forms-test/src/index.html",
-            "main": "projects/entry-forms-test/src/main.ts",
-            "polyfills": "projects/entry-forms-test/src/polyfills.ts",
-            "tsConfig": "projects/entry-forms-test/tsconfig.app.json",
+            "outputPath": "dist/entry-forms-dev",
+            "index": "projects/entry-forms-dev/src/index.html",
+            "main": "projects/entry-forms-dev/src/main.ts",
+            "polyfills": "projects/entry-forms-dev/src/polyfills.ts",
+            "tsConfig": "projects/entry-forms-dev/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "projects/entry-forms-test/src/favicon.ico",
-              "projects/entry-forms-test/src/assets"
+              "projects/entry-forms-dev/src/favicon.ico",
+              "projects/entry-forms-dev/src/assets"
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "projects/entry-forms-test/src/styles.scss"
+              "projects/entry-forms-dev/src/styles.scss"
             ],
             "scripts": []
           },
@@ -80,8 +80,8 @@
               ],
               "fileReplacements": [
                 {
-                  "replace": "projects/entry-forms-test/src/environments/environment.ts",
-                  "with": "projects/entry-forms-test/src/environments/environment.prod.ts"
+                  "replace": "projects/entry-forms-dev/src/environments/environment.ts",
+                  "with": "projects/entry-forms-dev/src/environments/environment.prod.ts"
                 }
               ],
               "outputHashing": "all"
@@ -101,10 +101,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "entry-forms-test:build:production"
+              "browserTarget": "entry-forms-dev:build:production"
             },
             "development": {
-              "browserTarget": "entry-forms-test:build:development"
+              "browserTarget": "entry-forms-dev:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -112,24 +112,24 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "entry-forms-test:build"
+            "browserTarget": "entry-forms-dev:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/entry-forms-test/src/test.ts",
-            "polyfills": "projects/entry-forms-test/src/polyfills.ts",
-            "tsConfig": "projects/entry-forms-test/tsconfig.spec.json",
-            "karmaConfig": "projects/entry-forms-test/karma.conf.js",
+            "main": "projects/entry-forms-dev/src/test.ts",
+            "polyfills": "projects/entry-forms-dev/src/polyfills.ts",
+            "tsConfig": "projects/entry-forms-dev/tsconfig.spec.json",
+            "karmaConfig": "projects/entry-forms-dev/karma.conf.js",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "projects/entry-forms-test/src/favicon.ico",
-              "projects/entry-forms-test/src/assets"
+              "projects/entry-forms-dev/src/favicon.ico",
+              "projects/entry-forms-dev/src/assets"
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "projects/entry-forms-test/src/styles.scss"
+              "projects/entry-forms-dev/src/styles.scss"
             ],
             "scripts": []
           }

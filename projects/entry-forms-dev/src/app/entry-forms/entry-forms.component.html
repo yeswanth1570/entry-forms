@@ -51,6 +51,9 @@
         <div *ngSwitchCase="'CUSTOM'">
             <ng-container *ngTemplateOutlet="CUSTOMTEMPLATE[field.templateRefName];context:{$implicit:field,formGroup:formGroup}"></ng-container>
         </div>
+        <div *ngSwitchCase="'FORMULA'">
+            <ng-container *ngTemplateOutlet="FORMULA;context:{$implicit:field,formGroup:formGroup}"></ng-container>
+        </div>
     </div>
 </ng-template>
 
@@ -59,7 +62,7 @@
         <mat-form-field appearance="outline">
             <mat-label>{{fieldInfo.fieldDisplayName}}</mat-label>
             <input matInput type="text" placeholder="{{fieldInfo.fieldDisplayName}}"
-                [formControlName]="fieldInfo.fieldName">
+                [formControlName]="fieldInfo.fieldName" (change)="changeCallback($event,fieldInfo)">
         </mat-form-field>
     </div>
 
@@ -69,7 +72,7 @@
         <mat-form-field appearance="outline">
             <mat-label>{{fieldInfo.fieldDisplayName}}</mat-label>
             <input matInput type="number" placeholder="{{fieldInfo.fieldDisplayName}}"
-                [formControlName]="fieldInfo.fieldName">
+                [formControlName]="fieldInfo.fieldName" (change)="changeCallback($event,fieldInfo)">
         </mat-form-field>
     </div>
 </ng-template>
@@ -78,7 +81,7 @@
         <mat-form-field appearance="outline">
             <mat-label>{{fieldInfo.fieldDisplayName}}</mat-label>
             <input matInput type="number" placeholder="{{fieldInfo.fieldDisplayName}}"
-                [formControlName]="fieldInfo.fieldName">
+                [formControlName]="fieldInfo.fieldName" (change)="changeCallback($event,fieldInfo)">
         </mat-form-field>
     </div>
 </ng-template>
@@ -87,7 +90,7 @@
         <mat-form-field appearance="outline">
             <mat-label>{{fieldInfo.fieldDisplayName}}</mat-label>
             <input matInput type="date" placeholder="{{fieldInfo.fieldDisplayName}}"
-                formControlName="{{fieldInfo.fieldName}}">
+                formControlName="{{fieldInfo.fieldName}}" (change)="changeCallback($event,fieldInfo)">
         </mat-form-field>
     </div>
 </ng-template>
@@ -96,7 +99,7 @@
         <mat-form-field appearance="outline">
             <mat-label>{{fieldInfo.fieldDisplayName}}</mat-label>
             <input matInput type="datetime-local" placeholder="{{fieldInfo.fieldDisplayName}}"
-                formControlName="{{fieldInfo.fieldName}}">
+                formControlName="{{fieldInfo.fieldName}}" (change)="changeCallback($event,fieldInfo)">
         </mat-form-field>
     </div>
 </ng-template>
@@ -105,7 +108,7 @@
         <mat-form-field appearance="outline">
             <mat-label>{{fieldInfo.fieldDisplayName}}</mat-label>
             <input matInput type="color" placeholder="{{fieldInfo.fieldDisplayName}}"
-                formControlName="{{fieldInfo.fieldName}}">
+                formControlName="{{fieldInfo.fieldName}}" (change)="changeCallback($event,fieldInfo)">
         </mat-form-field>
     </div>
 </ng-template>
@@ -114,7 +117,7 @@
         <mat-form-field appearance="outline">
             <mat-label>{{fieldInfo.fieldDisplayName}}</mat-label>
             <input matInput type="email" placeholder="{{fieldInfo.fieldDisplayName}}"
-                formControlName="{{fieldInfo.fieldName}}">
+                formControlName="{{fieldInfo.fieldName}}" (change)="changeCallback($event,fieldInfo)">
         </mat-form-field>
     </div>
 </ng-template>
@@ -123,7 +126,7 @@
         <mat-form-field appearance="outline">
             <mat-label>{{fieldInfo.fieldDisplayName}}</mat-label>
             <input matInput [type]="'password'" placeholder="{{fieldInfo.fieldDisplayName}}"
-                formControlName="{{fieldInfo.fieldName}}">
+                formControlName="{{fieldInfo.fieldName}}" (change)="changeCallback($event,fieldInfo)">
         </mat-form-field>
     </div>
 </ng-template>
@@ -132,7 +135,7 @@
         <mat-form-field appearance="outline">
             <mat-label>{{fieldInfo.fieldDisplayName}}</mat-label>
             <textarea matInput placeholder="{{fieldInfo.fieldDisplayName}}"
-                formControlName="{{fieldInfo.fieldName}}"></textarea>
+                formControlName="{{fieldInfo.fieldName}}" (change)="changeCallback($event,fieldInfo)"></textarea>
         </mat-form-field>
     </div>
 </ng-template>
@@ -140,7 +143,7 @@
     <div [formGroup]="formGroup" class="dropdown">
         <mat-form-field appearance="outline">
 
-            <mat-select placeholder="{{fieldInfo.fieldDisplayName}}" formControlName="{{fieldInfo.fieldName}}">
+            <mat-select placeholder="{{fieldInfo.fieldDisplayName}}" formControlName="{{fieldInfo.fieldName}}" (change)="changeCallback($event,fieldInfo)">
                 <mat-option *ngFor="let option of fieldInfo.options;" [value]="option">{{option}}</mat-option>
             </mat-select>
         </mat-form-field>
@@ -149,7 +152,7 @@
 <ng-template let-fieldInfo let-formGroup="formGroup" #RADIO>
     <div [formGroup]="formGroup" class="radio">
         <mat-label>{{fieldInfo.fieldDisplayName}}</mat-label>
-        <mat-radio-group formControlName="{{fieldInfo.fieldName}}">
+        <mat-radio-group formControlName="{{fieldInfo.fieldName}}" (change)="changeCallback($event,fieldInfo)">
             <mat-radio-button *ngFor="let option of fieldInfo.options;" [value]="option">{{option}}</mat-radio-button>
         </mat-radio-group>
     </div>
@@ -157,10 +160,19 @@
 <ng-template let-fieldInfo let-formGroup="formGroup" #CHECKBOX>
     <div [formGroup]="formGroup" class="checkbox">  
         <mat-form-field appearance="outline">
-        <mat-select multiple placeholder="{{fieldInfo.fieldDisplayName}}" formControlName="{{fieldInfo.fieldName}}">
+        <mat-select multiple placeholder="{{fieldInfo.fieldDisplayName}}" formControlName="{{fieldInfo.fieldName}}" (change)="changeCallback($event,fieldInfo)">
             <mat-option *ngFor="let option of fieldInfo.options;" [value]="option">
               {{option}}</mat-option>     
         </mat-select>
+        </mat-form-field>
+    </div>
+</ng-template>
+<ng-template let-fieldInfo let-formGroup="formGroup" #FORMULA>
+    <div [formGroup]="formGroup" class="formula">
+        <mat-form-field appearance="outline">
+            <!-- <mat-label>{{fieldInfo.fieldDisplayName}}</mat-label> -->
+            <input readonly matInput type="text" placeholder="{{fieldInfo.fieldDisplayName}}"
+                [formControlName]="fieldInfo.fieldName"  (change)="changeCallback($event,fieldInfo)">
         </mat-form-field>
     </div>
 </ng-template>

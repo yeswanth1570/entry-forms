@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MaterialModules } from '../../material.module';
+import { zipWith } from 'lodash-es';
 @Component({
   selector: 'app-entry',
   standalone: true,
@@ -44,35 +45,45 @@ export class EntryFormsComponent implements OnInit {
     console.log(this.globalFieldsArray)
   }
   dynaForms!: FormGroup<any>;
-  checkForFormGroupCreation:boolean = false;
+  checkForFormGroupCreation: boolean = false;
   /**
    * method is used to dynamically create a formGroup
    */
   createFormGroup(fieldsArray: Array<any>) {
+    this.dynaForms = new FormGroup({})
     let forms: any = {}
+    let defaultvalue = ''
+    let formGroupValidation = {}
     fieldsArray.forEach((fields) => {
-      if(!(fields?.formControlOption)){
-        fields.formControlOption={}
+      defaultvalue = fields?.props?.defaultvalue !== null ? fields?.props?.defaultvalue : '';
+      formGroupValidation = fields?.props?.formControlOption !== null ? fields?.props?.formControlOption : {}
+      forms[fields['fieldName']] = new FormControl(defaultvalue, formGroupValidation);
+      if (fields?.fieldType === 'FORMULA') {
+        let involvedFields = fields?.props?.formulaconfig.involvedFields ? fields?.props?.formulaconfig.involvedFields :[]
+        involvedFields.map((operands:any)=>this.involvedFields[operands] ? this.involvedFields[operands].push(fields) : this.involvedFields[operands]=[fields])
       }
-      forms[fields['fieldName']] = new FormControl('',fields.formControlOption);
-      
+      this.dynaForms.setControl(fields['fieldName'], new FormControl(defaultvalue, formGroupValidation))
     })
-    this.dynaForms = new FormGroup(forms)
-    this.formGroup.emit({formGroup:this.dynaForms})
+    // this.dynaForms = new FormGroup(forms)
+    this.formGroup.emit({ formGroup: this.dynaForms })
   }
- 
-  /**
-   * method is called when form is submitted
-   * @param form 
-   */
-  // onSubmit(form: FormGroup) {
-  //   this.onSubmitButtonClicked.emit({form:form})
-  // }
+involvedFields:any={}
+  changeCallback(event: any, formField: any) {
+    console.log(event,this.involvedFields);
+    this.involvedFields[formField['fieldName']].map((formulaField:any)=>{
+      let args ={
+        formulaField:formulaField,
+        updatedField:formField,
+        formGroup:this.dynaForms
+      }
+      formulaField['props']['formulaconfig']['formulaCallback'](event,args)
+    })
 
+  }
   @Output() onSubmitButtonClicked: EventEmitter<any> = new EventEmitter()
   @Output() formGroup: EventEmitter<any> = new EventEmitter()
-  @Input() dynaFields :any;
-  @Input() columns :number = 3;
+  @Input() dynaFields: any;
+  @Input() columns: number = 3;
   @Input()
   CUSTOMTEMPLATE!: any;
   columnSpace = 100 / 3
