@@ -1,0 +1,11 @@
+<h1>entry-forms</h1>
+<p>Start editing to see some magic happen :)</p>
+<entryForms
+  *ngIf="afterViewRendered"
+  [dynaFields]="configJson"
+  [columns]="3"
+  [CUSTOMTEMPLATE]="{ custom: customTemp }"
+  (formGroup)="formGroupCreated($event)"
+></entryForms>
+
+<ng-template #customTemp> this is custom field </ng-template>
