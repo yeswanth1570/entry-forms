@@ -1,14 +1,14 @@
 <form [formGroup]="dynaForms" >
-    <div style="margin: 20px;" fxLayout="column" class="dynaforms">
-        <div *ngFor="let field of globalFieldsArray" class="rows" fxLayout="row" fxFlex="100%" fxLayoutAlign=" center">
-            <div style="margin: 2% 0px;" fxLayout="column" fxFlex="{{columnSpace}}%"
-                fxLayoutAlign="space-between center" *ngFor="let row of field">
-                <ng-container
-                    *ngTemplateOutlet="SelectField;context:{$implicit:row,formGroup:dynaForms}"></ng-container>
+        <div style="margin: 20px;" fxLayout="column" class="dynaforms">
+            <div *ngFor="let field of globalFieldsArray" class="rows" fxLayout="row" fxFlex="100%" fxLayoutAlign=" center">
+                <div style="margin: 2% 0px;" fxLayout="column" fxFlex="{{columnSpace}}%"
+                    fxLayoutAlign="space-between center" *ngFor="let row of field">
+                    <ng-container
+                        *ngTemplateOutlet="SelectField;context:{$implicit:row,formGroup:dynaForms}"></ng-container>
+                </div>
             </div>
         </div>
-    </div>
-</form>
+    </form>
 
 <ng-template #SelectField let-field let-formGroup="formGroup">
     <div [ngSwitch]="field.fieldType">
@@ -53,6 +53,9 @@
         </div>
         <div *ngSwitchCase="'FORMULA'">
             <ng-container *ngTemplateOutlet="FORMULA;context:{$implicit:field,formGroup:formGroup}"></ng-container>
+        </div>
+        <div *ngSwitchCase="'SPLIT'">
+            <ng-container *ngTemplateOutlet="SPLIT;context:{$implicit:field,formGroup:formGroup}"></ng-container>
         </div>
     </div>
 </ng-template>
@@ -174,5 +177,16 @@
             <input readonly matInput type="text" placeholder="{{fieldInfo.fieldDisplayName}}"
                 [formControlName]="fieldInfo.fieldName"  (change)="changeCallback($event,fieldInfo)">
         </mat-form-field>
+    </div>
+</ng-template>
+<ng-template let-fieldInfo let-formGroup="formGroup" #SPLIT>
+    <div style="margin: 20px;width: 100%;" fxLayout="column" class="dynaforms">
+        <div class="rows" fxLayout="row" fxFlex="100%" fxLayoutAlign=" center">
+            <div style="margin: 2% 0px;" class="uniq" fxLayout="column" fxFlex="{{100 / (fieldInfo['fieldsArray'].length)}}%"
+            fxLayoutAlign="space-between center" *ngFor="let row of fieldInfo['fieldsArray']">
+            <ng-container
+                *ngTemplateOutlet="SelectField;context:{$implicit:row,formGroup:formGroup}"></ng-container>
+        </div>
+        </div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
     </div>
 </ng-template>

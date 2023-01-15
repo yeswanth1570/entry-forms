@@ -55,14 +55,18 @@ export class EntryFormsComponent implements OnInit {
     let defaultvalue = ''
     let formGroupValidation = {}
     fieldsArray.forEach((fields) => {
-      defaultvalue = fields?.props?.defaultvalue !== null ? fields?.props?.defaultvalue : '';
-      formGroupValidation = fields?.props?.formControlOption !== null ? fields?.props?.formControlOption : {}
-      forms[fields['fieldName']] = new FormControl(defaultvalue, formGroupValidation);
-      if (fields?.fieldType === 'FORMULA') {
-        let involvedFields = fields?.props?.formulaconfig.involvedFields ? fields?.props?.formulaconfig.involvedFields :[]
-        involvedFields.map((operands:any)=>this.involvedFields[operands] ? this.involvedFields[operands].push(fields) : this.involvedFields[operands]=[fields])
-      }
-      this.dynaForms.setControl(fields['fieldName'], new FormControl(defaultvalue, formGroupValidation))
+
+      let formGroupCreation = (fieldInfo:any) => {
+        defaultvalue = fieldInfo?.props?.defaultvalue !== null ? fieldInfo?.props?.defaultvalue : '';
+        formGroupValidation = fieldInfo?.props?.formControlOption !== null ? fieldInfo?.props?.formControlOption : {}
+        forms[fieldInfo['fieldName']] = new FormControl(defaultvalue, formGroupValidation);
+        if (fieldInfo?.fieldType === 'FORMULA') {
+          let involvedFields = fieldInfo?.props?.formulaconfig.involvedFields ? fieldInfo?.props?.formulaconfig.involvedFields : []
+          involvedFields.map((operands: any) => this.involvedFields[operands] ? this.involvedFields[operands].push(fieldInfo) : this.involvedFields[operands] = [fieldInfo])
+        }
+        this.dynaForms.setControl(fieldInfo['fieldName'], new FormControl(defaultvalue, formGroupValidation))
+      };
+      fields?.fieldType === 'SPLIT' ? fields.fieldsArray.map((splitFields:any) =>{formGroupCreation(splitFields);}) : formGroupCreation(fields);
     })
     // this.dynaForms = new FormGroup(forms)
     this.formGroup.emit({ formGroup: this.dynaForms })
