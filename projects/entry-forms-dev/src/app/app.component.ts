@@ -2,24 +2,25 @@ import { Component } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 type entryFields =
   {
-      fieldName:string,
-      fieldDisplayName:string,
-      fieldType:string,
-      options?:Array<any>,
-      templateRefName?:string,
-      props?:{
-        defaultvalue?:any,
-        formControlOption?:{
-          validators?:Validators,
-          asyncValidators?:any,
-          nonNullable?:boolean,
-          updateOn?:'blur'|'change'|'submit'
-        },
+    fieldName: string,
+    fieldDisplayName: string,
+    fieldType: string,
+    options?: Array<any>,
+    templateRefName?: string,
+    fieldsArray?: Array<entryFields>,
+    props?: {
+      defaultvalue?: any,
+      formControlOption?: {
+        validators?: Validators,
+        asyncValidators?: any,
+        nonNullable?: boolean,
+        updateOn?: 'blur' | 'change' | 'submit'
+      },
         formulaconfig?:{
           involvedFields:Array<any>;
           formulaCallback:any;
-        }
-      };
+      }
+    };
   }
 @Component({
   selector: 'app-root',
@@ -30,7 +31,7 @@ export class AppComponent {
   title = 'entryComp';
   customTemplate = true;
   afterViewRendered = false;
-  
+
   configJsonArr:Array<entryFields> = [
     {
       fieldName: 'TEXT',
@@ -42,7 +43,7 @@ export class AppComponent {
           validators:[Validators.minLength(2)]
         }
       },
-     
+
     }, {
       fieldName: 'NUMBER',
       fieldDisplayName: 'NUMBER',
@@ -80,7 +81,7 @@ export class AppComponent {
         defaultvalue:'option1'
       },
       options:['option1','option2','option3','option4']
-    }, 
+    },
     {
       fieldName: 'COLOR',
       fieldDisplayName: 'COLOR',
@@ -108,11 +109,6 @@ export class AppComponent {
       fieldDisplayName: 'CUSTOM',
       fieldType: 'CUSTOM',
       templateRefName: 'custom1TempRef'
-    }, {
-      fieldName: 'CUSTOM',
-      fieldDisplayName: 'CUSTOM',
-      fieldType: 'CUSTOM',
-      templateRefName: 'custom2TempRef'
     },
     {
       fieldName: 'FORMULA',
@@ -126,18 +122,41 @@ export class AppComponent {
           }
         }
       }
-    },
+    }, 
     {
-      fieldName: 'FORMULA2',
-      fieldDisplayName: 'FORMULA2',
-      fieldType: 'FORMULA',
-      props:{
-        formulaconfig:{
-          involvedFields:['NUMBER','TEXT','DROPDOWN'],
-          formulaCallback:(event:any,args:any)=>{
-      
+      fieldName: 'SPLIT',
+      fieldDisplayName: 'SPLIT',
+      fieldType: 'SPLIT',
+      fieldsArray: [{
+        fieldName: 'SplitTEXT1',
+        fieldDisplayName: 'SplitTEXT1',
+        fieldType: 'TEXT',
+        props: {
+          defaultvalue: 'SplitTEXT1',
+          formControlOption: {
+            validators: [Validators.minLength(2)]
           }
-        }
+        },
+
+      }, {
+        fieldName: 'SplitTEXT2',
+        fieldDisplayName: 'SplitTEXT2',
+        fieldType: 'TEXT',
+        props: {
+          defaultvalue: 'SplitTEXT2',
+          formControlOption: {
+            validators: [Validators.minLength(2)]
+          }
+        },
+
+      }]
+    },
+     {
+      fieldName: 'DECIMAL1',
+      fieldDisplayName: 'DECIMAL1',
+      fieldType: 'DECIMAL',
+      props: {
+        defaultvalue: 2
       }
     }
 
