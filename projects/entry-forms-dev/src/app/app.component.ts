@@ -59,7 +59,7 @@ export class AppComponent {
       fieldDisplayName: 'DECIMAL',
       fieldType: 'DECIMAL',
       props:{
-        defaultvalue:2
+        // defaultvalue:2
       }
     }, {
       fieldName: 'DATE',
@@ -80,7 +80,7 @@ export class AppComponent {
       props:{
         defaultvalue:'option1'
       },
-      options:['option1','option2','option3','option4']
+      options:['option1','option2','option3','option4','option1','option2','option3','option4','option1','option2','option3','option4']
     },
     {
       fieldName: 'COLOR',

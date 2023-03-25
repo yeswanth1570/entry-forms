@@ -4,9 +4,11 @@
 
 
 <!-- for custom template -->
-<app-entry *ngIf="customTemplate && afterViewRendered" [dynaFields]="configJsonArr" [columns]="5"
-    [CUSTOMTEMPLATE]="{'custom1TempRef':custom1TempRef,'custom2TempRef':custom2TempRef}"
-    (formGroup)="formGroupCreated($event)"></app-entry>
+<div class="container1" style=" margin: auto;width: 30%; border: 3px solid #73AD21; ">
+    <app-entry *ngIf="customTemplate && afterViewRendered" [dynaFields]="configJsonArr" [columns]="2"
+        [CUSTOMTEMPLATE]="{'custom1TempRef':custom1TempRef,'custom2TempRef':custom2TempRef}"
+        (formGroup)="formGroupCreated($event)"></app-entry>
+</div>
 <ng-template let-fieldInfo let-formGroup="formGroup" #custom1TempRef>
     <p>custom1</p>
 </ng-template>

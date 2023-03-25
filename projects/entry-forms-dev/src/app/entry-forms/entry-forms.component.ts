@@ -57,7 +57,7 @@ export class EntryFormsComponent implements OnInit {
     fieldsArray.forEach((fields) => {
 
       let formGroupCreation = (fieldInfo:any) => {
-        defaultvalue = fieldInfo?.props?.defaultvalue !== null ? fieldInfo?.props?.defaultvalue : '';
+        defaultvalue = fieldInfo?.props?.defaultvalue !== null ? fieldInfo?.props?.defaultvalue : undefined;
         formGroupValidation = fieldInfo?.props?.formControlOption !== null ? fieldInfo?.props?.formControlOption : {}
         forms[fieldInfo['fieldName']] = new FormControl(defaultvalue, formGroupValidation);
         if (fieldInfo?.fieldType === 'FORMULA') {

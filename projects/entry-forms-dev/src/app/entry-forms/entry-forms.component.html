@@ -1,14 +1,14 @@
-<form [formGroup]="dynaForms" >
-        <div style="margin: 20px;" fxLayout="column" class="dynaforms">
-            <div *ngFor="let field of globalFieldsArray" class="rows" fxLayout="row" fxFlex="100%" fxLayoutAlign=" center">
-                <div style="margin: 2% 0px;" fxLayout="column" fxFlex="{{columnSpace}}%"
-                    fxLayoutAlign="space-between center" *ngFor="let row of field">
-                    <ng-container
-                        *ngTemplateOutlet="SelectField;context:{$implicit:row,formGroup:dynaForms}"></ng-container>
-                </div>
+<form [formGroup]="dynaForms">
+    <div style="margin: 20px;" fxLayout="column" class="dynaforms">
+        <div *ngFor="let field of globalFieldsArray" class="rows" fxLayout="row" fxFlex="100%" fxLayoutAlign=" center">
+            <div style="margin: 2% 0px;" fxLayout="column" fxFlex="{{columnSpace}}%"
+                fxLayoutAlign="space-between center" *ngFor="let row of field">
+                <ng-container
+                    *ngTemplateOutlet="SelectField;context:{$implicit:row,formGroup:dynaForms}"></ng-container>
             </div>
         </div>
-    </form>
+    </div>
+</form>
 
 <ng-template #SelectField let-field let-formGroup="formGroup">
     <div [ngSwitch]="field.fieldType">
@@ -49,7 +49,8 @@
             <ng-container *ngTemplateOutlet="CHECKBOX;context:{$implicit:field,formGroup:formGroup}"></ng-container>
         </div>
         <div *ngSwitchCase="'CUSTOM'">
-            <ng-container *ngTemplateOutlet="CUSTOMTEMPLATE[field.templateRefName];context:{$implicit:field,formGroup:formGroup}"></ng-container>
+            <ng-container
+                *ngTemplateOutlet="CUSTOMTEMPLATE[field.templateRefName];context:{$implicit:field,formGroup:formGroup}"></ng-container>
         </div>
         <div *ngSwitchCase="'FORMULA'">
             <ng-container *ngTemplateOutlet="FORMULA;context:{$implicit:field,formGroup:formGroup}"></ng-container>
@@ -61,132 +62,203 @@
 </ng-template>
 
 <ng-template let-fieldInfo let-formGroup="formGroup" #TEXT>
-    <div [formGroup]="formGroup" class="text-container" fieldType="TEXT">
-        <mat-form-field appearance="outline">
+    <div [formGroup]="formGroup" class="entry-form-container text-container" fieldType="TEXT">
+        <!-- <mat-form-field appearance="outline">
             <mat-label>{{fieldInfo.fieldDisplayName}}</mat-label>
             <input matInput type="text" placeholder="{{fieldInfo.fieldDisplayName}}"
                 [formControlName]="fieldInfo.fieldName" (change)="changeCallback($event,fieldInfo)">
-        </mat-form-field>
+        </mat-form-field> -->
+
+        <div class="did-floating-label-content">
+            <input type="text" placeholder=" " class="entry-forms-input" [formControlName]="fieldInfo.fieldName"
+                (change)="changeCallback($event,fieldInfo)">
+            <label class="did-floating-label">{{fieldInfo.fieldDisplayName}}</label>
+        </div>
+
+
     </div>
 
 </ng-template>
 <ng-template let-fieldInfo let-formGroup="formGroup" #NUMBER>
-    <div [formGroup]="formGroup" class="number-container">
-        <mat-form-field appearance="outline">
+    <div [formGroup]="formGroup" class="entry-form-container number-container">
+        <!-- <mat-form-field appearance="outline">
             <mat-label>{{fieldInfo.fieldDisplayName}}</mat-label>
-            <input matInput type="number" placeholder="{{fieldInfo.fieldDisplayName}}"
+            <input matInput type="number" placeholder="{{fieldInfo.fieldDisplayName}}" class=""
                 [formControlName]="fieldInfo.fieldName" (change)="changeCallback($event,fieldInfo)">
-        </mat-form-field>
+        </mat-form-field> -->
+        <div class="did-floating-label-content">
+            <input type="number" placeholder=" " class="entry-forms-input" [formControlName]="fieldInfo.fieldName"
+                (change)="changeCallback($event,fieldInfo)">
+            <label class="did-floating-label">{{fieldInfo.fieldDisplayName}}</label>
+        </div>
     </div>
 </ng-template>
 <ng-template let-fieldInfo let-formGroup="formGroup" #DECIMAL>
-    <div [formGroup]="formGroup" class="decimal-container">
-        <mat-form-field appearance="outline">
+    <div [formGroup]="formGroup" class="entry-form-container decimal-container">
+        <!-- <mat-form-field appearance="outline">
             <mat-label>{{fieldInfo.fieldDisplayName}}</mat-label>
-            <input matInput type="number" placeholder="{{fieldInfo.fieldDisplayName}}"
+            <input matInput type="number" placeholder="{{fieldInfo.fieldDisplayName}}" class=""
                 [formControlName]="fieldInfo.fieldName" (change)="changeCallback($event,fieldInfo)">
-        </mat-form-field>
+        </mat-form-field> -->
+        <div class="did-floating-label-content">
+            <input type="number" placeholder=" " class="entry-forms-input" [formControlName]="fieldInfo.fieldName"
+                (change)="changeCallback($event,fieldInfo)">
+            <label class="did-floating-label">{{fieldInfo.fieldDisplayName}}</label>
+        </div>
     </div>
 </ng-template>
 <ng-template let-fieldInfo let-formGroup="formGroup" #DATE>
-    <div [formGroup]="formGroup" class="date-container">
-        <mat-form-field appearance="outline">
+    <div [formGroup]="formGroup" class="entry-form-container date-container">
+        <!-- <mat-form-field appearance="outline">
             <mat-label>{{fieldInfo.fieldDisplayName}}</mat-label>
-            <input matInput type="date" placeholder="{{fieldInfo.fieldDisplayName}}"
-                formControlName="{{fieldInfo.fieldName}}" (change)="changeCallback($event,fieldInfo)">
-        </mat-form-field>
+            <input matInput type="date" placeholder="{{fieldInfo.fieldDisplayName}}" class="">
+        </mat-form-field> -->
+        <div class="did-floating-label-content">
+            <input type="date" placeholder=" " class="entry-forms-input" [formControlName]="fieldInfo.fieldName"
+                (change)="changeCallback($event,fieldInfo)">
+            <label class="did-floating-label">{{fieldInfo.fieldDisplayName}}</label>
+        </div>
     </div>
 </ng-template>
 <ng-template let-fieldInfo let-formGroup="formGroup" #DATETIME>
-    <div [formGroup]="formGroup" class="datetime-container">
-        <mat-form-field appearance="outline">
+    <div [formGroup]="formGroup" class="entry-form-container datetime-container">
+        <!-- <mat-form-field appearance="outline">
             <mat-label>{{fieldInfo.fieldDisplayName}}</mat-label>
-            <input matInput type="datetime-local" placeholder="{{fieldInfo.fieldDisplayName}}"
+            <input matInput type="datetime-local" placeholder="{{fieldInfo.fieldDisplayName}}" class=""
                 formControlName="{{fieldInfo.fieldName}}" (change)="changeCallback($event,fieldInfo)">
-        </mat-form-field>
+        </mat-form-field> -->
+        <div class="did-floating-label-content">
+            <input type="datetime-local" placeholder=" " class="entry-forms-input"
+                [formControlName]="fieldInfo.fieldName" (change)="changeCallback($event,fieldInfo)">
+            <label class="did-floating-label">{{fieldInfo.fieldDisplayName}}</label>
+        </div>
     </div>
 </ng-template>
 <ng-template let-fieldInfo let-formGroup="formGroup" #COLOR>
-    <div [formGroup]="formGroup" class="color-container">
-        <mat-form-field appearance="outline">
+    <div [formGroup]="formGroup" class="entry-form-container color-container">
+        <!-- <mat-form-field appearance="outline">
             <mat-label>{{fieldInfo.fieldDisplayName}}</mat-label>
-            <input matInput type="color" placeholder="{{fieldInfo.fieldDisplayName}}"
+            <input matInput type="color" placeholder="{{fieldInfo.fieldDisplayName}}" class=""
                 formControlName="{{fieldInfo.fieldName}}" (change)="changeCallback($event,fieldInfo)">
-        </mat-form-field>
+        </mat-form-field> -->
+        <div class="did-floating-label-content">
+            <input style="width: 80px;" type="color" placeholder=" " class="entry-forms-input"
+                [formControlName]="fieldInfo.fieldName" (change)="changeCallback($event,fieldInfo)">
+            <label class="did-floating-label">{{fieldInfo.fieldDisplayName}}</label>
+        </div>
     </div>
 </ng-template>
 <ng-template let-fieldInfo let-formGroup="formGroup" #EMAIL>
-    <div [formGroup]="formGroup" class="email-container">
-        <mat-form-field appearance="outline">
+    <div [formGroup]="formGroup" class="entry-form-container email-container">
+        <!-- <mat-form-field appearance="outline">
             <mat-label>{{fieldInfo.fieldDisplayName}}</mat-label>
-            <input matInput type="email" placeholder="{{fieldInfo.fieldDisplayName}}"
+            <input matInput type="email" placeholder="{{fieldInfo.fieldDisplayName}}" class=""
                 formControlName="{{fieldInfo.fieldName}}" (change)="changeCallback($event,fieldInfo)">
-        </mat-form-field>
+        </mat-form-field> -->
+        <div class="did-floating-label-content">
+            <input type="email" placeholder=" " class="entry-forms-input" [formControlName]="fieldInfo.fieldName"
+                (change)="changeCallback($event,fieldInfo)">
+            <label class="did-floating-label">{{fieldInfo.fieldDisplayName}}</label>
+        </div>
     </div>
 </ng-template>
 <ng-template let-fieldInfo let-formGroup="formGroup" #PASSWORD>
-    <div [formGroup]="formGroup" class="password-container">
-        <mat-form-field appearance="outline">
+    <div [formGroup]="formGroup" class="entry-form-container password-container">
+        <!-- <mat-form-field appearance="outline">
             <mat-label>{{fieldInfo.fieldDisplayName}}</mat-label>
-            <input matInput [type]="'password'" placeholder="{{fieldInfo.fieldDisplayName}}"
+            <input matInput [type]="'password'" placeholder="{{fieldInfo.fieldDisplayName}}" class=""
                 formControlName="{{fieldInfo.fieldName}}" (change)="changeCallback($event,fieldInfo)">
-        </mat-form-field>
+        </mat-form-field> -->
+        <div class="did-floating-label-content">
+            <input type="password" placeholder=" " class="entry-forms-input" [formControlName]="fieldInfo.fieldName"
+                (change)="changeCallback($event,fieldInfo)">
+            <label class="did-floating-label">{{fieldInfo.fieldDisplayName}}</label>
+        </div>
     </div>
 </ng-template>
 <ng-template let-fieldInfo let-formGroup="formGroup" #TEXTAREA>
-    <div [formGroup]="formGroup" class="textarea-container">
-        <mat-form-field appearance="outline">
+    <div [formGroup]="formGroup" class="entry-form-container textarea-container">
+        <!-- <mat-form-field appearance="outline">
             <mat-label>{{fieldInfo.fieldDisplayName}}</mat-label>
-            <textarea matInput placeholder="{{fieldInfo.fieldDisplayName}}"
+            <textarea matInput placeholder="{{fieldInfo.fieldDisplayName}}" class=""
                 formControlName="{{fieldInfo.fieldName}}" (change)="changeCallback($event,fieldInfo)"></textarea>
-        </mat-form-field>
+        </mat-form-field> -->
+        <div class="did-floating-label-content">
+            <textarea placeholder=" " class="entry-forms-input" style=" resize:vertical; padding-top: 10px;"
+                [formControlName]="fieldInfo.fieldName" (change)="changeCallback($event,fieldInfo)"></textarea>
+            <label class="did-floating-label">{{fieldInfo.fieldDisplayName}}</label>
+        </div>
     </div>
 </ng-template>
 <ng-template let-fieldInfo let-formGroup="formGroup" #DROPDOWN>
-    <div [formGroup]="formGroup" class="dropdown-container">
-        <mat-form-field appearance="outline">
+    <div [formGroup]="formGroup" class="entry-form-container dropdown-container">
+        <!-- <mat-form-field appearance="outline">
 
-            <mat-select placeholder="{{fieldInfo.fieldDisplayName}}" formControlName="{{fieldInfo.fieldName}}" (change)="changeCallback($event,fieldInfo)">
+            <mat-select placeholder="{{fieldInfo.fieldDisplayName}}" formControlName="{{fieldInfo.fieldName}}" (change)="changeCallback($event,fieldInfo)" class="">
                 <mat-option *ngFor="let option of fieldInfo.options;" [value]="option">{{option}}</mat-option>
             </mat-select>
-        </mat-form-field>
+        </mat-form-field> -->
+        <div class="did-floating-label-content">
+            <select placeholder=" " class="entry-forms-input-select" [formControlName]="fieldInfo.fieldName"
+                (change)="changeCallback($event,fieldInfo)" style="width:215px">
+                <option value=""></option>
+                <option *ngFor="let option of fieldInfo.options;" [value]="option">{{option}}</option>
+            </select>
+            <label class="did-floating-label">{{fieldInfo.fieldDisplayName}}</label>
+        </div>
     </div>
 </ng-template>
 <ng-template let-fieldInfo let-formGroup="formGroup" #RADIO>
-    <div [formGroup]="formGroup" class="radio-container">
+    <div [formGroup]="formGroup" class="entry-form-container radio-container">
         <mat-label>{{fieldInfo.fieldDisplayName}}</mat-label>
-        <mat-radio-group formControlName="{{fieldInfo.fieldName}}" (change)="changeCallback($event,fieldInfo)">
+        <mat-radio-group formControlName="{{fieldInfo.fieldName}}" (change)="changeCallback($event,fieldInfo)" class="">
             <mat-radio-button *ngFor="let option of fieldInfo.options;" [value]="option">{{option}}</mat-radio-button>
         </mat-radio-group>
     </div>
 </ng-template>
 <ng-template let-fieldInfo let-formGroup="formGroup" #CHECKBOX>
-    <div [formGroup]="formGroup" class="checkbox-container">  
-        <mat-form-field appearance="outline">
-        <mat-select multiple placeholder="{{fieldInfo.fieldDisplayName}}" formControlName="{{fieldInfo.fieldName}}" (change)="changeCallback($event,fieldInfo)">
-            <mat-option *ngFor="let option of fieldInfo.options;" [value]="option">
-              {{option}}</mat-option>     
-        </mat-select>
-        </mat-form-field>
+    <div [formGroup]="formGroup" class="entry-form-container checkbox-container">
+        <!-- <mat-form-field appearance="outline">
+            <mat-select multiple placeholder="{{fieldInfo.fieldDisplayName}}" formControlName="{{fieldInfo.fieldName}}"
+                (change)="changeCallback($event,fieldInfo)" class="">
+                <mat-option *ngFor="let option of fieldInfo.options;" [value]="option">
+                    {{option}}</mat-option>
+            </mat-select>
+        </mat-form-field> -->
+        <div class="did-floating-label-content">
+            <div>
+                <select multiple="multiple" multiselect-search="true" multiselect-select-all="true"  placeholder=" " class="entry-forms-input-select" [formControlName]="fieldInfo.fieldName"
+                (change)="changeCallback($event,fieldInfo)" style="width:215px" [value]="">
+                <option *ngFor="let option of fieldInfo.options;" [value]="option">{{option}}</option>
+            </select>
+            <label class="did-floating-label">{{fieldInfo.fieldDisplayName}}</label>
+            </div>
+            
+        </div>
     </div>
 </ng-template>
 <ng-template let-fieldInfo let-formGroup="formGroup" #FORMULA>
-    <div [formGroup]="formGroup" class="formula-container">
-        <mat-form-field appearance="outline">
-            <!-- <mat-label>{{fieldInfo.fieldDisplayName}}</mat-label> -->
-            <input readonly matInput type="text" placeholder="{{fieldInfo.fieldDisplayName}}"
-                [formControlName]="fieldInfo.fieldName"  (change)="changeCallback($event,fieldInfo)">
-        </mat-form-field>
+    <div [formGroup]="formGroup" class="entry-form-container formula-container">
+        <!-- <mat-form-field appearance="outline">
+            <input readonly matInput type="text" placeholder="{{fieldInfo.fieldDisplayName}}" class=""
+                [formControlName]="fieldInfo.fieldName" (change)="changeCallback($event,fieldInfo)">
+        </mat-form-field> -->
+        <div class="">
+            <input readonly type="text" placeholder=" {{fieldInfo.fieldDisplayName}}" class="entry-forms-input" [formControlName]="fieldInfo.fieldName"
+                (change)="changeCallback($event,fieldInfo)">
+            <label class="did-floating-label">{{fieldInfo.fieldDisplayName}}</label>
+        </div>
     </div>
 </ng-template>
 <ng-template let-fieldInfo let-formGroup="formGroup" #SPLIT>
     <div style="margin: 20px;width: 100%;" fxLayout="column" class="dynaforms">
         <div class="rows" fxLayout="row" fxFlex="100%" fxLayoutAlign=" center">
-            <div style="margin: 2% 0px;" class="uniq" fxLayout="column" fxFlex="{{100 / (fieldInfo['fieldsArray'].length)}}%"
-            fxLayoutAlign="space-between center" *ngFor="let row of fieldInfo['fieldsArray']">
-            <ng-container
-                *ngTemplateOutlet="SelectField;context:{$implicit:row,formGroup:formGroup}"></ng-container>
+            <div style="margin: 2% 0px;" class="uniq" fxLayout="column"
+                fxFlex="{{100 / (fieldInfo['fieldsArray'].length)}}%" fxLayoutAlign="space-between center"
+                *ngFor="let row of fieldInfo['fieldsArray']">
+                <ng-container
+                    *ngTemplateOutlet="SelectField;context:{$implicit:row,formGroup:formGroup}"></ng-container>
+            </div>
         </div>
-        </div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
     </div>
 </ng-template>
